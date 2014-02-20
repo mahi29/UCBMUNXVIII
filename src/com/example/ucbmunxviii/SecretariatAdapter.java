@@ -1,12 +1,10 @@
 package com.example.ucbmunxviii;
 
-import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

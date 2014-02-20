@@ -27,7 +27,6 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class RoomsFragment extends Fragment {
 	//The order of names, rooms, and pictures (in GridAdapter.java) all need to match up. Be careful!

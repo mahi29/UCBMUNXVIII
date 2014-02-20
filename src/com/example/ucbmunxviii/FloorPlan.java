@@ -1,8 +1,6 @@
 package com.example.ucbmunxviii;
 
-import com.example.touch.TouchImageView;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;

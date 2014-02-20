@@ -2,9 +2,7 @@ package com.example.ucbmunxviii;
 
 import java.util.ArrayList;
 
-import android.animation.AnimatorSet.Builder;
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.app.ListFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -71,8 +69,6 @@ public class ContactFragment extends ListFragment {
 			builder.setNeutralButton("Call " + firstName, new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					String[] numberPieces = member.number.split("-");
-					String num = numberPieces[0]+numberPieces[1]+numberPieces[2];
 					Intent call = new Intent(Intent.ACTION_CALL);
 					call.setData(Uri.parse("tel:"+member.number));
 					startActivity(call);
