@@ -3,7 +3,6 @@ package com.example.ucbmunxviii;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.example.ucbmunxviii.RoomsFragment.CommitteeItem;
 import com.example.ucbmunxviii.SponsorFragment.SponsorItem;
 
 import android.app.Activity;
