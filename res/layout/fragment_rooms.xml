@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@color/fragment_background"
+    android:layout_height="match_parent">
+    <ExpandableListView
+                android:id="@+id/committeeExp"
+                android:layout_height="0dp"
+                android:layout_weight="11"
+                android:layout_width="match_parent"/>  
+    <Button
+        android:id="@+id/rules"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_width="fill_parent"
+        android:background="@drawable/sec_selector"
+        android:layout_margin="15dp"
+        android:text="Download Rules and Procedures"
+        android:layout_alignParentBottom="true" />                
+ 
+
+</LinearLayout>

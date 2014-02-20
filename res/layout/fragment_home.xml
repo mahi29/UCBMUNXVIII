@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView 
+        android:layout_width="fill_parent"
+        android:contentDescription="UCBMUN Logo"
+        android:id="@+id/ucbmunlogo"
+        android:layout_height="180dp"    
+        android:clickable="true"    
+        android:src="@drawable/logowhite"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="90dp"/>
+    
+    <TextView
+        android:id="@+id/txtLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="40dp"
+        android:textColor="#FFF"
+        android:layout_below="@id/ucbmunlogo"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:text="Welcome to UCBMUN XVIII"/>
+
+   	<ImageView
+   	    android:id="@+id/twitterLogo"
+   	    android:layout_width="wrap_content"
+   	    android:layout_height="40dp"
+   	    android:layout_alignRight="@+id/txtLabel"
+   	    android:layout_alignTop="@+id/fbLogo"
+   	    android:layout_marginRight="82dp"
+   	    android:clickable="true"
+   	    android:contentDescription="UCBMUN Logo"
+   	    android:src="@drawable/twitterlogo" />
+
+   	<ImageView
+   	    android:id="@+id/fbLogo"
+   	    android:layout_width="wrap_content"
+   	    android:layout_height="40dp"
+   	    android:layout_alignLeft="@+id/txtLabel"
+   	    android:layout_below="@+id/txtLabel"
+   	    android:layout_marginLeft="66dp"
+   	    android:layout_marginTop="17dp"
+   	    android:clickable="true"
+   	    android:contentDescription="UCBMUN Logo"
+   	    android:src="@drawable/fblogo" />
+    
+</RelativeLayout>

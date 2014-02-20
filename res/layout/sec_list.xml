@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Single ListRow Layout -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/sec_selector"
+    android:orientation="horizontal"
+    android:padding="7dip" >
+ 
+    <!--  ListRow Left side Secretariat Portrait -->
+    <LinearLayout android:id="@+id/thumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="1dp"
+        android:orientation='horizontal'
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="2dp">
+ 		
+        <ImageView
+            android:id="@+id/list_image"
+            android:layout_width="75dip"
+            android:layout_height="75dip"
+            android:src="@drawable/contact"/>
+ 		
+    </LinearLayout>
+ 
+    <!-- Secretariat Position-->
+    <TextView
+        android:id="@+id/position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/thumbnail"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="Secretary-General"
+        android:textColor="@color/secretariat_text"
+        android:typeface="sans"
+        android:textSize="15dip"
+        android:textStyle="bold"/>
+ 
+    <!-- Secretariat Name -->
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/position"
+        android:textColor="@color/secretariat_text"
+        android:textSize="20dip"
+        android:layout_marginTop="1dip"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="Adam B. Spaulding" />
+</RelativeLayout>
