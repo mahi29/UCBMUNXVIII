@@ -46,5 +46,27 @@
    	    android:clickable="true"
    	    android:contentDescription="UCBMUN Logo"
    	    android:src="@drawable/fblogo" />
+
+    <TextView
+        android:id="@+id/sessionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/twitterLogo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:text="The next committee session is on"
+        android:textColor="#FFF"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/sessionTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sessionText"
+        android:layout_centerHorizontal="true"
+        android:text="..."
+        android:textColor="#D4A017"
+        android:textSize="18sp"
+        android:textStyle="bold" />
     
 </RelativeLayout>

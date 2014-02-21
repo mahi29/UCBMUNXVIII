@@ -2,6 +2,7 @@ package com.example.ucbmunxviii;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 
@@ -13,6 +14,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.provider.CalendarContract.Events;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,8 +25,8 @@ import android.widget.TextView;
 
 public class ScheduleFragment extends Fragment {
 	
-	private ArrayList<String> days;
-	private HashMap<String, ArrayList<ScheduleItem>> schedule;
+	public static ArrayList<String> days;
+	public static HashMap<String, ArrayList<ScheduleItem>> schedule;
 	
 	public ScheduleFragment(){}
 	
@@ -53,13 +55,17 @@ public class ScheduleFragment extends Fragment {
 				builder.setPositiveButton("Add to Calendar", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
+											
+						Calendar startDate = item.dateStart;
+						Calendar endDate = item.dateEnd;
+						Log.d("ScheduleFragment","SD: " + startDate.toString());
+						Log.d("ScheduleFragment","ED: " + endDate.toString());
+						//Create the Intent
 						Intent scheduleEvent = new Intent(Intent.ACTION_INSERT);
 						scheduleEvent.setData(CalendarContract.Events.CONTENT_URI);
-						scheduleEvent.setType("vnd.android.cursor.item/event");
 						scheduleEvent.putExtra(Events.TITLE, item.event);
-						if (item.location != null) scheduleEvent.putExtra(Events.EVENT_LOCATION, item.location);
-						GregorianCalendar startDate = item.dateStart;
-						GregorianCalendar endDate = item.dateEnd;
+						if (item.location != null) 
+							scheduleEvent.putExtra(Events.EVENT_LOCATION, item.location);
 						scheduleEvent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, false);
 						scheduleEvent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME,
 						     startDate.getTimeInMillis());
