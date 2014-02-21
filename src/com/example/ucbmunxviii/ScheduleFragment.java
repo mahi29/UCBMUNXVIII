@@ -124,7 +124,7 @@ public class ScheduleFragment extends Fragment {
 	}
 
 	
-	public void getData() {
+	public static void getData() {
 		days = new ArrayList<String>();
 		schedule = new HashMap<String, ArrayList<ScheduleItem>>();
 		days.add("Thursday");
