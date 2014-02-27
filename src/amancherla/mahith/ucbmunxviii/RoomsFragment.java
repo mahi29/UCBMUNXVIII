@@ -48,19 +48,19 @@ public class RoomsFragment extends Fragment {
 	private static final String URL_PREFIX = "http://ucbmun.org/bgGuides/";
 	private static final String RULES_PREFIX = "http://ucbmun.org/";
 	private static final String UPDATE_PREFIX = "http://ucbmun.org/updatePapers/";
-	
+
 	public RoomsFragment(){}
-	
+
 	@Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
- 
-        View rootView = inflater.inflate(R.layout.fragment_rooms, container, false);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+
+		View rootView = inflater.inflate(R.layout.fragment_rooms, container, false);
 		populateData();
-        expandableListView = (ExpandableListView) rootView.findViewById(R.id.committeeExp);
-        rulesButton = (Button) rootView.findViewById(R.id.rules);
-        expandableListView.setAdapter(new CommitteeAdapter(getActivity(),committeeTypes, committees));
-        expandableListView.setOnChildClickListener(new OnChildClickListener() {
+		expandableListView = (ExpandableListView) rootView.findViewById(R.id.committeeExp);
+		rulesButton = (Button) rootView.findViewById(R.id.rules);
+		expandableListView.setAdapter(new CommitteeAdapter(getActivity(),committeeTypes, committees));
+		expandableListView.setOnChildClickListener(new OnChildClickListener() {
 
 			@Override
 			public boolean onChildClick(ExpandableListView parent, View v,
@@ -79,28 +79,27 @@ public class RoomsFragment extends Fragment {
 						if (fpFrag != null) {
 							FragmentManager fragmentManager = getFragmentManager();
 							fragmentManager.beginTransaction()
-									.replace(R.id.frame_container, fpFrag).addToBackStack(null).commit();
+							.replace(R.id.frame_container, fpFrag).addToBackStack(null).commit();
 							getActivity().getActionBar().setTitle("Hotel Map");
 						}
 					}
 				});
-				//Do not show the 'Download Guide' option for Ad-hoc until the BG Guide is public (requires update!)
-				//XXX: Remove If statement to allow Ad-Hoc download
+
+				builder.setPositiveButton("Download Guide", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {		
+						String suffix = committee.suffixUrl;
+						String guideURL = URL_PREFIX + suffix;
+						if (dm == null)
+							dm = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+						Request request = new Request(Uri.parse(guideURL));
+						request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,suffix);
+						request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+						request.setVisibleInDownloadsUi(true);
+						dm.enqueue(request);
+					}
+				});
 				if (!committee.name.equals("Ad-Hoc")) {
-					builder.setPositiveButton("Download Guide", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {		
-							String suffix = committee.suffixUrl;
-							String guideURL = URL_PREFIX + suffix;
-							if (dm == null)
-								dm = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
-					        Request request = new Request(Uri.parse(guideURL));
-					        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,suffix);
-					        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-					        request.setVisibleInDownloadsUi(true);
-					        dm.enqueue(request);
-						}
-					});
 					builder.setNeutralButton("Download Update Paper", new DialogInterface.OnClickListener() {
 
 						@Override
@@ -109,16 +108,17 @@ public class RoomsFragment extends Fragment {
 							String guideURL = UPDATE_PREFIX + suffix;
 							if (dm == null)
 								dm = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
-					        Request request = new Request(Uri.parse(guideURL));
-					        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,suffix);
-					        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-					        request.setVisibleInDownloadsUi(true);
-					        dm.enqueue(request);
+							Request request = new Request(Uri.parse(guideURL));
+							request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,suffix);
+							request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+							request.setVisibleInDownloadsUi(true);
+							dm.enqueue(request);
 						}
-						
+
 					});
-							
 				}
+
+
 				AlertDialog dialog = builder.create();
 				dialog.show();
 				//Centers message text
@@ -126,61 +126,33 @@ public class RoomsFragment extends Fragment {
 				messageView.setGravity(Gravity.CENTER);
 				return false;
 			}
-        });
-        rulesButton.setOnClickListener(new OnClickListener() {
+		});
+		rulesButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				String suffix = "rules.pdf";
 				String guideURL = RULES_PREFIX + suffix;
 				if (dm == null)
 					dm = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
-		        Request request = new Request(Uri.parse(guideURL));
-		        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,suffix);
-		        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-		        request.setVisibleInDownloadsUi(true);
-		        dm.enqueue(request);
+				Request request = new Request(Uri.parse(guideURL));
+				request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,suffix);
+				request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+				request.setVisibleInDownloadsUi(true);
+				dm.enqueue(request);
 			}
-        	
-        });        
+
+		});        
 
 
-        return rootView;
-    }
-	 BroadcastReceiver onNotificationClick = new BroadcastReceiver() {
+		return rootView;
+	}
+	BroadcastReceiver onNotificationClick = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context ctxt, Intent intent) {
-		    Log.d("onNotificationClick","onReceive");
+			Log.d("onNotificationClick","onReceive");
 		}
-	  };
-	/*
-	 * INPUT: Grid position selected
-	 * OUTPUT: suffix portion of the URL
-	 * Given the grid square selected, returns the appropriate suffix url to append to prefixURL
-	 * This is also something that needs to be changed if any ordering gets changed
-	 */
-	public String getURL(int position, boolean isBackgroundGuide) {
-		String suffix = "UNSC";
-		switch (position) {
-			case 0: suffix = "ECHR";break;
-			case 1: suffix = "GA";break;
-			case 2: suffix = "NSS";break;
-			case 3: suffix = "CWFS";break;
-			case 4: suffix = "UNSC";break;
-			case 5: suffix = "Chile";break;
-			case 6: suffix = "Chevron";break;
-			case 7: suffix = "SriLanka";break;
-			case 8: suffix = "Adhoc";break;
-			case 9: suffix = "CIA";break;
-			case 10: suffix = "MSS";break;
-			case 11: suffix = "Mossad";break;
-			case 12: suffix = "VEVAK";break;
-		}
-		if (isBackgroundGuide) {
-			return suffix+"_BG.pdf";
-		} else {
-			return suffix+"_UP.pdf";
-		}	
-	}
+	};
+	
 	/*
 	 * Creates a custom title
 	 * Centers the text and changes the color to gold
@@ -197,17 +169,17 @@ public class RoomsFragment extends Fragment {
 		title.setTextSize(20);
 		return title;
 	}
-	
-	
+
+
 	@Override
 	public void onPause() {
 		super.onPause();
 	}
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(onNotificationClick, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+		LocalBroadcastManager.getInstance(getActivity()).registerReceiver(onNotificationClick, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
 	}
 	private void populateData() {
 		committees = new HashMap<String, ArrayList<CommitteeItem>>();
@@ -222,7 +194,7 @@ public class RoomsFragment extends Fragment {
 		crisis.add(new CommitteeItem("Pinochet's Chile","Mason I","Ramit Malhotra","Chile"));
 		crisis.add(new CommitteeItem("Chevron Executive Board","Mason II","Rashi Jindani","Chevron"));
 		crisis.add(new CommitteeItem("Sri Lanka 2006","Montgomery","Antoine Bichara","SriLanka"));
-		crisis.add(new CommitteeItem("Ad-Hoc","Pyramid","Lynn Yu","Adhoc"));
+		crisis.add(new CommitteeItem("Ad-Hoc","Pyramid","Lynn Yu","AdHoc"));
 		jcc.add(new CommitteeItem("Covert Ops - CIA","Front","Noah Efron","CIA"));
 		jcc.add(new CommitteeItem("Covert Ops - MSS","Sansome","Sahil Gupta","MSS"));
 		jcc.add(new CommitteeItem("Covert Ops - Mossad","Washington","Alizeh Paracha","Mossad"));
@@ -230,16 +202,16 @@ public class RoomsFragment extends Fragment {
 		committees.put(committeeTypes[0],sbga);
 		committees.put(committeeTypes[1], crisis);
 		committees.put(committeeTypes[2], jcc);
-		
+
 	}
-	
+
 	public class CommitteeItem {
 		String name;
 		String location;
 		String chair;
 		String suffixUrl;
 		String updateURL;
-		
+
 		public CommitteeItem(String name, String location, String chair, String url) {
 			this.name = name;
 			this.location = location;

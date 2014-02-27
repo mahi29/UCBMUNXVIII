@@ -154,7 +154,7 @@ public class ScheduleFragment extends Fragment {
 		//Thursday
 		ArrayList<ScheduleItem> thurs = new ArrayList<ScheduleItem>();
 		ScheduleItem t1 = new ScheduleItem("Registration","5:00pm - 6:30pm", "3rd Floor Parlor", "Thursday");
-		ScheduleItem t2 = new ScheduleItem("MUN 101 Workshop","5:00pm - 6:00pm", "Pine", "Thursday");
+		ScheduleItem t2 = new ScheduleItem("MUN 101 Workshop","5:00pm - 6:00pm", "Columbus I", "Thursday");
 		ScheduleItem t3 = new ScheduleItem("Opening Ceremonies","6:30pm - 7:30pm", "Grand Ballroom", "Thursday");
 		ScheduleItem t4 = new ScheduleItem("Committee Session I","7:45pm - 9:45pm", true, "Thursday");
 		ScheduleItem t5 = new ScheduleItem("Committee Feedback","10:00pm - 10:30pm", "Pine", "Thursday");
